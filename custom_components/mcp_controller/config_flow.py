@@ -20,9 +20,15 @@ from .const import (
     SERVICE_TYPE_BOOKSTACK,
     SERVICE_TYPE_M365,
     SERVICE_TYPE_LOKI,
+    SERVICE_TYPE_BOOKSTACK_MCP,
+    SERVICE_TYPE_M365_MCP,
+    SERVICE_TYPE_LOKKA_MCP,
     DEFAULT_PORT_BOOKSTACK,
     DEFAULT_PORT_M365,
     DEFAULT_PORT_LOKI,
+    DEFAULT_PORT_BOOKSTACK_MCP,
+    DEFAULT_PORT_M365_MCP,
+    DEFAULT_PORT_LOKKA_MCP,
     CONF_CLIENT_ID,
     CONF_CLIENT_SECRET,
 )
@@ -56,6 +62,9 @@ class MCPControllerConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                                 SERVICE_TYPE_BOOKSTACK,
                                 SERVICE_TYPE_M365,
                                 SERVICE_TYPE_LOKI,
+                                SERVICE_TYPE_BOOKSTACK_MCP,
+                                SERVICE_TYPE_M365_MCP,
+                                SERVICE_TYPE_LOKKA_MCP,
                             ]
                         ),
                     }
@@ -98,6 +107,30 @@ class MCPControllerConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                         vol.Required(CONF_NAME): str,
                         vol.Required(CONF_HOST): str,
                         vol.Required(CONF_PORT, default=DEFAULT_PORT_LOKI): int,
+                    }
+                )
+            elif self.service_type == SERVICE_TYPE_BOOKSTACK_MCP:
+                data_schema = vol.Schema(
+                    {
+                        vol.Required(CONF_NAME): str,
+                        vol.Required(CONF_HOST): str,
+                        vol.Required(CONF_PORT, default=DEFAULT_PORT_BOOKSTACK_MCP): int,
+                    }
+                )
+            elif self.service_type == SERVICE_TYPE_M365_MCP:
+                data_schema = vol.Schema(
+                    {
+                        vol.Required(CONF_NAME): str,
+                        vol.Required(CONF_HOST): str,
+                        vol.Required(CONF_PORT, default=DEFAULT_PORT_M365_MCP): int,
+                    }
+                )
+            elif self.service_type == SERVICE_TYPE_LOKKA_MCP:
+                data_schema = vol.Schema(
+                    {
+                        vol.Required(CONF_NAME): str,
+                        vol.Required(CONF_HOST): str,
+                        vol.Required(CONF_PORT, default=DEFAULT_PORT_LOKKA_MCP): int,
                     }
                 )
 
@@ -156,6 +189,20 @@ class MCPControllerOptionsFlow(config_entries.OptionsFlow):
                         CONF_API_SECRET,
                         default=self.config_entry.data.get(CONF_API_SECRET),
                     ): str,
+                }
+            )
+        elif service_type in [SERVICE_TYPE_BOOKSTACK_MCP, SERVICE_TYPE_M365_MCP, SERVICE_TYPE_LOKKA_MCP]:
+            # For MCP servers, we only need to configure host and port
+            options_schema = vol.Schema(
+                {
+                    vol.Optional(
+                        CONF_HOST,
+                        default=self.config_entry.data.get(CONF_HOST),
+                    ): str,
+                    vol.Optional(
+                        CONF_PORT,
+                        default=self.config_entry.data.get(CONF_PORT),
+                    ): int,
                 }
             )
         # Add other service types here...
