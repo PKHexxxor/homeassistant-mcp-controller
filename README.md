@@ -9,6 +9,14 @@ Eine Home Assistant Integration zur Steuerung verschiedener MCP (Media Control P
 - Abfrage von Loki-Logs direkt aus Home Assistant
 - Erweiterbare Architektur für weitere MCP-kompatible Dienste
 
+## Speziell unterstützte MCP-Server
+
+Diese Integration unterstützt speziell folgende MCP-Server:
+
+1. [**PKHexxxor/mcp-bookstack**](https://github.com/PKHexxxor/mcp-bookstack) - MCP-Server für Bookstack
+2. [**PKHexxxor/ms-365-mcp-server**](https://github.com/PKHexxxor/ms-365-mcp-server) - MCP-Server für Microsoft 365
+3. [**Prinz-Thomas-GmbH/lokka**](https://github.com/Prinz-Thomas-GmbH/lokka) - MCP-Server für Loki Log-Abfragen
+
 ## Ein-Klick-Installation
 
 ### Methode 1: Mit der Installations-Karte (am einfachsten)
@@ -40,28 +48,47 @@ type: custom:mcp-controller-installer
 
 1. Gehe zu **Einstellungen** → **Geräte & Dienste**
 2. Klicke auf **+ Integration hinzufügen** und suche nach "MCP Controller"
-3. Wähle den Dienst-Typ, den du hinzufügen möchtest (Bookstack, M365 oder Loki)
-4. Gib die erforderlichen Konfigurationsinformationen ein:
-   - Für Bookstack: Hostname, Port, API-Schlüssel, API-Secret
-   - Für Microsoft 365: Client-ID, Client-Secret
-   - Für Loki: Hostname, Port
+3. Wähle den Dienst-Typ, den du hinzufügen möchtest:
+   - **bookstack**: Standard Bookstack API
+   - **m365**: Standard Microsoft 365 API
+   - **loki**: Standard Loki API
+   - **bookstack_mcp**: Bookstack über MCP-Server
+   - **m365_mcp**: Microsoft 365 über MCP-Server
+   - **lokka_mcp**: Loki über MCP-Server (Lokka)
+4. Gib die erforderlichen Konfigurationsinformationen ein (je nach Service-Typ unterschiedlich)
 
 ## Services
 
 Diese Integration stellt folgende Services bereit:
 
-### Bookstack
+### Bookstack API
 
 - `mcp_controller.bookstack_search`: Nach Inhalten in Bookstack suchen
 - `mcp_controller.bookstack_create_page`: Eine neue Seite in Bookstack erstellen
 
-### Microsoft 365
+### Microsoft 365 API
 
 - `mcp_controller.m365_list_emails`: Aktuelle E-Mails von Microsoft 365 auflisten
 
-### Loki
+### Loki API
 
 - `mcp_controller.loki_query_logs`: Logs von Loki abfragen
+
+### Bookstack MCP
+
+- `mcp_controller.bookstack_mcp_search_pages`: Nach Seiten in Bookstack über den MCP-Server suchen
+
+### Microsoft 365 MCP
+
+- `mcp_controller.m365_mcp_login`: Bei Microsoft 365 über den MCP-Server anmelden
+- `mcp_controller.m365_mcp_list_emails`: E-Mails von Microsoft 365 über den MCP-Server auflisten
+- `mcp_controller.m365_mcp_list_calendar_events`: Kalendereinträge von Microsoft 365 über den MCP-Server auflisten
+
+### Lokka MCP (Loki)
+
+- `mcp_controller.lokka_mcp_query_logs`: Logs von Lokka über den MCP-Server abfragen
+- `mcp_controller.lokka_mcp_get_labels`: Alle Label-Namen von Lokka über den MCP-Server abrufen
+- `mcp_controller.lokka_mcp_get_label_values`: Alle Werte für ein bestimmtes Label von Lokka über den MCP-Server abrufen
 
 ## Sprachsteuerung mit Home Assistant Assist
 
