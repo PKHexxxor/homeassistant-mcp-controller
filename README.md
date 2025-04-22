@@ -17,17 +17,13 @@ Diese Integration unterstützt speziell folgende MCP-Server:
 2. [**PKHexxxor/ms-365-mcp-server**](https://github.com/PKHexxxor/ms-365-mcp-server) - MCP-Server für Microsoft 365
 3. [**Prinz-Thomas-GmbH/lokka**](https://github.com/Prinz-Thomas-GmbH/lokka) - MCP-Server für Loki Log-Abfragen
 
-## Ein-Klick-Installation
+## Installation
 
-### Methode 1: Mit der Installations-Karte (am einfachsten)
+### Methode 1: Ein-Klick-Installation (am einfachsten)
 
-1. Füge diese Karte zu deinem Dashboard hinzu:
+[![Ein-Klick-Installation](https://my.home-assistant.io/badges/config_flow_start.svg)](https://my.home-assistant.io/redirect/config_flow_start?domain=mcp_controller)
 
-```yaml
-type: custom:mcp-controller-installer
-```
-
-2. Klicke auf den "Jetzt installieren"-Button und folge den Anweisungen
+Klicke auf den Button oben und folge den Anweisungen, um die Integration zu installieren.
 
 ### Methode 2: HACS
 
@@ -39,7 +35,7 @@ type: custom:mcp-controller-installer
 3. Suche nach "MCP Controller" in HACS und installiere es
 4. Starte Home Assistant neu
 
-### Manuelle Installation
+### Methode 3: Manuelle Installation
 
 1. Kopiere das `custom_components/mcp_controller`-Verzeichnis in dein Home Assistant `custom_components`-Verzeichnis
 2. Starte Home Assistant neu
@@ -100,21 +96,65 @@ Beispiel-Sätze:
 - "Zeige meine aktuellen E-Mails"
 - "Prüfe Systemlogs auf Fehler"
 
-## Installation der Widget-Karte
+## Automatisierungsbeispiele
 
-Um die Ein-Klick-Installationskarte zu nutzen:
+### Nach Bookstack-Seiten suchen
 
-1. Kopiere die Datei `/www/mcp-installer.js` in dein Home Assistant `/www/`-Verzeichnis
-2. Füge die Ressource in deiner Lovelace-Konfiguration hinzu:
-   ```yaml
-   resources:
-     - url: /local/mcp-installer.js
-       type: module
-   ```
-3. Dann kannst du die Karte in jedem Dashboard verwenden:
-   ```yaml
-   type: custom:mcp-controller-installer
-   ```
+```yaml
+alias: "Bookstack Suche - Anleitungen"
+trigger:
+  platform: state
+  entity_id: input_text.bookstack_suche
+action:
+  - service: mcp_controller.bookstack_mcp_search_pages
+    data:
+      service_name: "Mein Bookstack"
+      query: "{{ states('input_text.bookstack_suche') }}"
+      count: 5
+  - service: persistent_notification.create
+    data:
+      title: "Bookstack-Suchergebnisse"
+      message: "{{ return }}"
+```
+
+### Microsoft 365 E-Mails abrufen
+
+```yaml
+alias: "E-Mail-Überprüfung"
+trigger:
+  platform: time_pattern
+  minutes: "/30"
+action:
+  - service: mcp_controller.m365_mcp_list_emails
+    data:
+      service_name: "Mein Microsoft 365"
+      count: 5
+  - service: input_text.set_value
+    data:
+      entity_id: input_text.letzte_emails
+      value: "{{ return.value | map(attribute='subject') | join('\n') }}"
+```
+
+### Logs nach Fehlern durchsuchen
+
+```yaml
+alias: "Log-Überwachung"
+trigger:
+  platform: time_pattern
+  minutes: "/15"
+action:
+  - service: mcp_controller.lokka_mcp_query_logs
+    data:
+      service_name: "Mein Lokka Server"
+      query: '{app="home-assistant"} |= "error"'
+      limit: 20
+  - condition: template
+    value_template: "{{ return.streams | length > 0 }}"
+  - service: notify.mobile_app
+    data:
+      title: "Log-Fehler gefunden!"
+      message: "Es wurden {{ return.streams | length }} Log-Einträge mit Fehlern gefunden."
+```
 
 ## Mitmachen
 
