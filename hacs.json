@@ -1,0 +1,6 @@
+{
+  "name": "MCP Controller",
+  "render_readme": true,
+  "domains": ["sensor"],
+  "homeassistant": "2023.8.0"
+}
