@@ -1,0 +1,104 @@
+# Services for MCP Controller
+
+bookstack_search:
+  name: Bookstack Search
+  description: Search for content in Bookstack
+  fields:
+    service_name:
+      name: Service Name
+      description: Name of the configured Bookstack service
+      required: true
+      selector:
+        text:
+    query:
+      name: Query
+      description: Search query
+      required: true
+      selector:
+        text:
+
+bookstack_create_page:
+  name: Bookstack Create Page
+  description: Create a new page in Bookstack
+  fields:
+    service_name:
+      name: Service Name
+      description: Name of the configured Bookstack service
+      required: true
+      selector:
+        text:
+    book_id:
+      name: Book ID
+      description: ID of the book to create the page in
+      required: true
+      selector:
+        number:
+          min: 1
+          mode: box
+    title:
+      name: Title
+      description: Title of the page
+      required: true
+      selector:
+        text:
+    content:
+      name: Content
+      description: Content of the page (in Markdown)
+      required: true
+      selector:
+        text:
+          multiline: true
+
+m365_list_emails:
+  name: M365 List Emails
+  description: List recent emails from Microsoft 365
+  fields:
+    service_name:
+      name: Service Name
+      description: Name of the configured M365 service
+      required: true
+      selector:
+        text:
+    folder:
+      name: Folder
+      description: Email folder to list (default is inbox)
+      required: false
+      default: inbox
+      selector:
+        text:
+    count:
+      name: Count
+      description: Number of emails to fetch
+      required: false
+      default: 10
+      selector:
+        number:
+          min: 1
+          max: 50
+          mode: box
+
+loki_query_logs:
+  name: Loki Query Logs
+  description: Query logs from Loki
+  fields:
+    service_name:
+      name: Service Name
+      description: Name of the configured Loki service
+      required: true
+      selector:
+        text:
+    query:
+      name: Query
+      description: LogQL query
+      required: true
+      selector:
+        text:
+    time_range:
+      name: Time Range
+      description: Time range in minutes
+      required: false
+      default: 15
+      selector:
+        number:
+          min: 1
+          mode: box
