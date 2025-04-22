@@ -1,69 +1,98 @@
 # Home Assistant MCP Controller
 
-A Home Assistant integration to control various MCP (Media Control Protocol) servers including Bookstack, Microsoft 365, and Loki.
+Eine Home Assistant Integration zur Steuerung verschiedener MCP (Media Control Protocol) Server wie Bookstack, Microsoft 365 und Loki.
 
 ## Features
 
-- Control and access Bookstack through MCP protocol
-- Integrate with Microsoft 365 services
-- Query Loki logs directly from Home Assistant
-- Expandable design to add more MCP-compatible services
+- Steuerung und Zugriff auf Bookstack über das MCP-Protokoll
+- Integration mit Microsoft 365-Diensten
+- Abfrage von Loki-Logs direkt aus Home Assistant
+- Erweiterbare Architektur für weitere MCP-kompatible Dienste
 
-## Installation
+## Ein-Klick-Installation
 
-### HACS (Recommended)
+### Methode 1: Mit der Installations-Karte (am einfachsten)
 
-1. Make sure you have [HACS](https://hacs.xyz/) installed
-2. Add this repository as a custom repository in HACS
-3. Search for "MCP Controller" in HACS and install it
-4. Restart Home Assistant
+1. Füge diese Karte zu deinem Dashboard hinzu:
 
-### Manual Installation
+```yaml
+type: custom:mcp-controller-installer
+```
 
-1. Copy the `custom_components/mcp_controller` directory to your Home Assistant `custom_components` directory
-2. Restart Home Assistant
+2. Klicke auf den "Jetzt installieren"-Button und folge den Anweisungen
 
-## Configuration
+### Methode 2: HACS
 
-1. Go to Home Assistant **Settings** → **Devices & Services**
-2. Click **+ Add Integration** and search for "MCP Controller"
-3. Select the service type you want to add (Bookstack, M365, or Loki)
-4. Enter the required configuration information:
-   - For Bookstack: hostname, port, API key, API secret
-   - For Microsoft 365: client ID, client secret
-   - For Loki: hostname, port
+1. Stelle sicher, dass [HACS](https://hacs.xyz/) installiert ist
+2. Füge dieses Repository als benutzerdefiniertes Repository in HACS hinzu:
+   - Gehe zu HACS > Integrationen > Drei-Punkte-Menü > Benutzerdefiniertes Repository
+   - URL: `https://github.com/PKHexxxor/homeassistant-mcp-controller`
+   - Kategorie: Integration
+3. Suche nach "MCP Controller" in HACS und installiere es
+4. Starte Home Assistant neu
+
+### Manuelle Installation
+
+1. Kopiere das `custom_components/mcp_controller`-Verzeichnis in dein Home Assistant `custom_components`-Verzeichnis
+2. Starte Home Assistant neu
+
+## Konfiguration
+
+1. Gehe zu **Einstellungen** → **Geräte & Dienste**
+2. Klicke auf **+ Integration hinzufügen** und suche nach "MCP Controller"
+3. Wähle den Dienst-Typ, den du hinzufügen möchtest (Bookstack, M365 oder Loki)
+4. Gib die erforderlichen Konfigurationsinformationen ein:
+   - Für Bookstack: Hostname, Port, API-Schlüssel, API-Secret
+   - Für Microsoft 365: Client-ID, Client-Secret
+   - Für Loki: Hostname, Port
 
 ## Services
 
-This integration provides the following services:
+Diese Integration stellt folgende Services bereit:
 
 ### Bookstack
 
-- `mcp_controller.bookstack_search`: Search for content in Bookstack
-- `mcp_controller.bookstack_create_page`: Create a new page in Bookstack
+- `mcp_controller.bookstack_search`: Nach Inhalten in Bookstack suchen
+- `mcp_controller.bookstack_create_page`: Eine neue Seite in Bookstack erstellen
 
 ### Microsoft 365
 
-- `mcp_controller.m365_list_emails`: List recent emails from Microsoft 365
+- `mcp_controller.m365_list_emails`: Aktuelle E-Mails von Microsoft 365 auflisten
 
 ### Loki
 
-- `mcp_controller.loki_query_logs`: Query logs from Loki
+- `mcp_controller.loki_query_logs`: Logs von Loki abfragen
 
-## Voice Control with Home Assistant Assist
+## Sprachsteuerung mit Home Assistant Assist
 
-You can use the built-in Home Assistant Assist feature to control MCP services with voice commands. Add custom sentences to trigger automations that call MCP Controller services.
+Du kannst die eingebaute Home Assistant Assist-Funktion verwenden, um MCP-Dienste mit Sprachbefehlen zu steuern. Füge benutzerdefinierte Sätze hinzu, um Automatisierungen auszulösen, die MCP Controller-Dienste aufrufen.
 
-Example sentences:
+Beispiel-Sätze:
 
-- "Search Bookstack for home automation"
-- "Show my recent emails"
-- "Check system logs for errors"
+- "Suche in Bookstack nach Home Automation"
+- "Zeige meine aktuellen E-Mails"
+- "Prüfe Systemlogs auf Fehler"
 
-## Contributing
+## Installation der Widget-Karte
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+Um die Ein-Klick-Installationskarte zu nutzen:
 
-## License
+1. Kopiere die Datei `/www/mcp-installer.js` in dein Home Assistant `/www/`-Verzeichnis
+2. Füge die Ressource in deiner Lovelace-Konfiguration hinzu:
+   ```yaml
+   resources:
+     - url: /local/mcp-installer.js
+       type: module
+   ```
+3. Dann kannst du die Karte in jedem Dashboard verwenden:
+   ```yaml
+   type: custom:mcp-controller-installer
+   ```
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+## Mitmachen
+
+Beiträge sind willkommen! Erstelle gerne einen Pull Request.
+
+## Lizenz
+
+Dieses Projekt ist unter der MIT-Lizenz lizenziert - siehe die LICENSE-Datei für Details.
