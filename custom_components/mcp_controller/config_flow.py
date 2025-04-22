@@ -40,6 +40,10 @@ class MCPControllerConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
     VERSION = 1
     CONNECTION_CLASS = config_entries.CONN_CLASS_CLOUD_POLL
+    
+    def __init__(self):
+        """Initialize the config flow."""
+        self.service_type = None
 
     @staticmethod
     @callback
