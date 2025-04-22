@@ -1,5 +1,6 @@
 # Services for MCP Controller
 
+# Bookstack API services
 bookstack_search:
   name: Bookstack Search
   description: Search for content in Bookstack
@@ -49,6 +50,7 @@ bookstack_create_page:
         text:
           multiline: true
 
+# Microsoft 365 API services
 m365_list_emails:
   name: M365 List Emails
   description: List recent emails from Microsoft 365
@@ -77,6 +79,7 @@ m365_list_emails:
           max: 50
           mode: box
 
+# Loki API services
 loki_query_logs:
   name: Loki Query Logs
   description: Query logs from Loki
@@ -102,3 +105,155 @@ loki_query_logs:
         number:
           min: 1
           mode: box
+
+# Bookstack MCP services
+bookstack_mcp_search_pages:
+  name: Bookstack MCP Search Pages
+  description: Search for pages in Bookstack through MCP server
+  fields:
+    service_name:
+      name: Service Name
+      description: Name of the configured Bookstack MCP service
+      required: true
+      selector:
+        text:
+    query:
+      name: Query
+      description: Search query
+      required: true
+      selector:
+        text:
+    page:
+      name: Page
+      description: Page number of results to return
+      required: false
+      default: 1
+      selector:
+        number:
+          min: 1
+          max: 10
+          mode: box
+    count:
+      name: Count
+      description: Number of results to return per page
+      required: false
+      default: 10
+      selector:
+        number:
+          min: 1
+          max: 30
+          mode: box
+
+# Microsoft 365 MCP services
+m365_mcp_login:
+  name: Microsoft 365 MCP Login
+  description: Login to Microsoft 365 through MCP server
+  fields:
+    service_name:
+      name: Service Name
+      description: Name of the configured Microsoft 365 MCP service
+      required: true
+      selector:
+        text:
+    force:
+      name: Force
+      description: Force a new login even if already logged in
+      required: false
+      default: false
+      selector:
+        boolean:
+
+m365_mcp_list_emails:
+  name: Microsoft 365 MCP List Emails
+  description: List recent emails from Microsoft 365 through MCP server
+  fields:
+    service_name:
+      name: Service Name
+      description: Name of the configured Microsoft 365 MCP service
+      required: true
+      selector:
+        text:
+    folder:
+      name: Folder
+      description: Email folder to list (default is inbox)
+      required: false
+      default: inbox
+      selector:
+        text:
+    count:
+      name: Count
+      description: Number of emails to fetch
+      required: false
+      default: 10
+      selector:
+        number:
+          min: 1
+          max: 50
+          mode: box
+
+m365_mcp_list_calendar_events:
+  name: Microsoft 365 MCP List Calendar Events
+  description: List calendar events from Microsoft 365 through MCP server
+  fields:
+    service_name:
+      name: Service Name
+      description: Name of the configured Microsoft 365 MCP service
+      required: true
+      selector:
+        text:
+
+# Lokka MCP services
+lokka_mcp_query_logs:
+  name: Lokka MCP Query Logs
+  description: Query logs from Lokka through MCP server
+  fields:
+    service_name:
+      name: Service Name
+      description: Name of the configured Lokka MCP service
+      required: true
+      selector:
+        text:
+    query:
+      name: Query
+      description: LogQL query
+      required: true
+      selector:
+        text:
+    limit:
+      name: Limit
+      description: Maximum number of log lines to return
+      required: false
+      default: 100
+      selector:
+        number:
+          min: 1
+          max: 1000
+          mode: box
+
+lokka_mcp_get_labels:
+  name: Lokka MCP Get Labels
+  description: Get all label names from Lokka through MCP server
+  fields:
+    service_name:
+      name: Service Name
+      description: Name of the configured Lokka MCP service
+      required: true
+      selector:
+        text:
+
+lokka_mcp_get_label_values:
+  name: Lokka MCP Get Label Values
+  description: Get all values for a specific label from Lokka through MCP server
+  fields:
+    service_name:
+      name: Service Name
+      description: Name of the configured Lokka MCP service
+      required: true
+      selector:
+        text:
+    label:
+      name: Label
+      description: The label name to get values for
+      required: true
+      selector:
+        text:
