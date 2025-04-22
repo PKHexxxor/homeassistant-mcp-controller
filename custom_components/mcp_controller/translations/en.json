@@ -1,0 +1,48 @@
+{
+  "config": {
+    "title": "MCP Controller",
+    "step": {
+      "user": {
+        "title": "Choose connection type",
+        "description": "Select the type of connection you want to set up.",
+        "data": {
+          "service_type": "Service Type"
+        }
+      },
+      "service_config": {
+        "title": "Service Configuration",
+        "description": "Configure the connection details for the selected service.",
+        "data": {
+          "name": "Name",
+          "host": "Host",
+          "port": "Port",
+          "api_key": "API Key",
+          "api_secret": "API Secret",
+          "client_id": "Client ID",
+          "client_secret": "Client Secret"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Failed to connect",
+      "invalid_auth": "Invalid authentication",
+      "unknown": "Unexpected error"
+    },
+    "abort": {
+      "already_configured": "Service is already configured"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Options for MCP Controller",
+        "data": {
+          "host": "Host",
+          "port": "Port",
+          "api_key": "API Key",
+          "api_secret": "API Secret"
+        }
+      }
+    }
+  }
+}
