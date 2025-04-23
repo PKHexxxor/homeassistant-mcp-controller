@@ -51,6 +51,24 @@ bookstack_create_page:
           multiline: true
 
 # Microsoft 365 API services
+m365_login:
+  name: Microsoft 365 Login
+  description: Start OAuth login flow for Microsoft 365 - opens a browser window
+  fields:
+    service_name:
+      name: Service Name
+      description: Name of the configured Microsoft 365 service
+      required: true
+      selector:
+        text:
+    force:
+      name: Force
+      description: Force a new login even if already logged in
+      required: false
+      default: false
+      selector:
+        boolean:
+
 m365_list_emails:
   name: M365 List Emails
   description: List recent emails from Microsoft 365
@@ -77,6 +95,27 @@ m365_list_emails:
         number:
           min: 1
           max: 50
+          mode: box
+
+m365_list_calendar_events:
+  name: M365 List Calendar Events
+  description: List calendar events from Microsoft 365
+  fields:
+    service_name:
+      name: Service Name
+      description: Name of the configured M365 service
+      required: true
+      selector:
+        text:
+    days:
+      name: Days
+      description: Number of days to include in the calendar view
+      required: false
+      default: 7
+      selector:
+        number:
+          min: 1
+          max: 30
           mode: box
 
 # Loki API services
