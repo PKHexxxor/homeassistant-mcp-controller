@@ -1,0 +1,22 @@
+# Home Assistant Core (implizit vorhanden, wenn als Integration installiert)
+# homeassistant>=2023.1.0
+
+# MCP Protocol SDK
+mcp-protocol-sdk>=1.9.0
+
+# OAuth2 für Microsoft 365
+oauthlib>=3.2.0
+requests-oauthlib>=1.3.0
+
+# Graph API für Microsoft 365 (optional)
+msgraph-sdk>=1.0.0
+
+# Utilities
+pydantic>=2.0.0
+async-timeout>=4.0.0
+aiohttp>=3.8.0
+
+# Testing
+pytest>=7.0.0
+pytest-asyncio>=0.20.0
+pytest-cov>=4.0.0
